@@ -1,0 +1,24 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+  {{ polls.poll_name }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-5">{{ polls.poll_name }}</h1>
+
+
+<form action="{% url 'polls:results' polls.id %}" method="post">
+{% csrf_token %}
+{% for question in polls.question_set.all %}
+  <h2 class="mt-5 mb-5">{{ question.question_text }}</h2>
+  {% for choice in question.choice_set.all %}
+    <input type="{{ question.question_type }}" name="choice" id="choice{{ forloop.counter }}" value="" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+  {% endfor %}
+{% endfor %}
+<br />
+<input type="submit" value="Отправить" />
+</form>
+{% endblock %}

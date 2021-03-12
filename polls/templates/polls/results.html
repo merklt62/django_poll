@@ -1,0 +1,27 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+  {{ poll.poll_name }}
+{% endblock %}
+
+
+{% block content %}
+<h1>{{ question.question_text }}</h1>
+<h1>{{ poll.poll_name }}</h1>
+
+
+{% for question in poll.question_set.all %}
+  <h2 class="mt-5 mb-5">{{ question.question_text }}</h2>
+  <ul>
+    {% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+
+
+<button type="button" class="btn btn-success">
+  <a href="{% url 'polls:index' %}">Вернуться на главную</a>
+</button>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+  Список опросов
+{% endblock %}
+
+
+{% block content %}
+  <h1 class="mb-5">Опросы:</h1>
+  {% if polls_list %}
+    {% for poll in polls_list %}
+      <div class="card mb-5">
+        <h5 class="card-header">{{ poll.date_start }} - {{ poll.date_end }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{ poll.poll_name }}</h5>
+          <p class="card-text">{{ poll.description }}</p>
+          <a href="{% url 'polls:question_list' poll.id %}" class="btn btn-primary">Пройти опрос</a>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Опросов не найдено</p>
+  {% endif %}
+{% endblock %}
